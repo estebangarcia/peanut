@@ -108,7 +108,7 @@ At the moment there isn't much flexibility on the behaviour of the pipeline when
 
 ## But Why?
 
-![](https://media.giphy.com/media/s239QJIh56sRW/giphy.gif)
+![why](https://github.com/estebangarcia/peanut/blob/master/.github/why.gif)
 
 I started this project to learn how to develop an operator for k8s using kubebuilder.
 
