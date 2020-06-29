@@ -1,0 +1,13 @@
+domain: peanut.dev
+repo: github.com/estebangarcia/peanut
+resources:
+- group: pipeline
+  kind: PeanutPipeline
+  version: v1alpha1
+- group: pipeline
+  kind: PeanutStage
+  version: v1alpha1
+- group: pipeline
+  kind: PeanutPipelineExecution
+  version: v1alpha1
+version: "2"

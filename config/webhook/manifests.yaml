@@ -1,0 +1,52 @@
+
+---
+apiVersion: admissionregistration.k8s.io/v1beta1
+kind: MutatingWebhookConfiguration
+metadata:
+  creationTimestamp: null
+  name: mutating-webhook-configuration
+webhooks:
+- clientConfig:
+    caBundle: Cg==
+    service:
+      name: webhook-service
+      namespace: system
+      path: /mutate-pipeline-peanut-dev-v1alpha1-peanutpipeline
+  failurePolicy: Fail
+  name: mpeanutpipeline.peanut.dev
+  rules:
+  - apiGroups:
+    - pipeline.peanut.dev
+    apiVersions:
+    - v1alpha1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - peanutpipelines
+
+---
+apiVersion: admissionregistration.k8s.io/v1beta1
+kind: ValidatingWebhookConfiguration
+metadata:
+  creationTimestamp: null
+  name: validating-webhook-configuration
+webhooks:
+- clientConfig:
+    caBundle: Cg==
+    service:
+      name: webhook-service
+      namespace: system
+      path: /validate-pipeline-peanut-dev-v1alpha1-peanutpipeline
+  failurePolicy: Fail
+  name: vpeanutpipeline.peanut.dev
+  rules:
+  - apiGroups:
+    - pipeline.peanut.dev
+    apiVersions:
+    - v1alpha1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - peanutpipelines

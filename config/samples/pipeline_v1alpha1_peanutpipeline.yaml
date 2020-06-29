@@ -1,0 +1,26 @@
+apiVersion: pipeline.peanut.dev/v1alpha1
+kind: PeanutPipeline
+metadata:
+  name: pipeline-sample
+spec:
+  stages:
+  - name: "First Stage"
+    type: first-stage
+    #onFailure: halt/ignore
+  - name: "Second Stage"
+    type: second-stage
+    #dependsOn:
+    #- "First Stage"
+  - name: "Third Stage"
+    type: first-stage
+    dependsOn:
+    - "Second Stage"
+  - name: "Fourth Stage"
+    type: first-stage
+    dependsOn:
+      - "Second Stage"
+  - name: "Fifth Stage"
+    type: first-stage
+    dependsOn:
+      - "Third Stage"
+      - "Fourth Stage"

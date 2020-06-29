@@ -1,0 +1,6 @@
+apiVersion: pipeline.peanut.dev/v1alpha1
+kind: PeanutPipelineExecution
+metadata:
+  name: peanutpipelineexecution-sample
+spec:
+  pipelineName: pipeline-sample

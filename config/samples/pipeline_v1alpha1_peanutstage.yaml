@@ -1,0 +1,19 @@
+apiVersion: pipeline.peanut.dev/v1alpha1
+kind: PeanutStage
+metadata:
+  name: first-stage
+spec:
+  image: busybox
+  command: ["sleep"]
+  args: ["10"]
+  timeout: 30
+---
+apiVersion: pipeline.peanut.dev/v1alpha1
+kind: PeanutStage
+metadata:
+  name: second-stage
+spec:
+  image: busybox
+  command: ["sleep"]
+  args: ["15"]
+  timeout: 30

@@ -1,0 +1,20 @@
+# permissions for end users to view peanutpipelines.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: peanutpipeline-viewer-role
+rules:
+- apiGroups:
+  - pipeline.peanut.dev
+  resources:
+  - peanutpipelines
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - pipeline.peanut.dev
+  resources:
+  - peanutpipelines/status
+  verbs:
+  - get

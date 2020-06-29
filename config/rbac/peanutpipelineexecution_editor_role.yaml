@@ -1,0 +1,24 @@
+# permissions for end users to edit peanutpipelineexecutions.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: peanutpipelineexecution-editor-role
+rules:
+- apiGroups:
+  - pipeline.peanut.dev
+  resources:
+  - peanutpipelineexecutions
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - pipeline.peanut.dev
+  resources:
+  - peanutpipelineexecutions/status
+  verbs:
+  - get
