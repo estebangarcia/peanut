@@ -1,4 +1,5 @@
 # Peanut Kubernetes Pipelines
+![Test Controller](https://github.com/estebangarcia/peanut/workflows/Test%20Controller/badge.svg)
 
 Peanut is an operator for running pipelines in Kubernetes.
 
