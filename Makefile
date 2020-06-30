@@ -18,8 +18,8 @@ all: manager
 
 control-plane-install:
 	if [ ! -d "/usr/local/kubebuilder" ]; then \
-		wget -O /tmp/kubebuilder.tar.gz https://github.com/kubernetes-sigs/kubebuilder/releases/download/v$(KUBEBUILDER_VERSION)/kubebuilder_$(KUBEBUILDER_VERSION)_$(OS)_amd64.tar.gz \
-		tar zxvf /tmp/kubebuilder.tar.gz -C /tmp \
+		wget -O /tmp/kubebuilder.tar.gz https://github.com/kubernetes-sigs/kubebuilder/releases/download/v$(KUBEBUILDER_VERSION)/kubebuilder_$(KUBEBUILDER_VERSION)_$(OS)_amd64.tar.gz; \
+		tar zxvf /tmp/kubebuilder.tar.gz -C /tmp; \
 		mkdir -p /usr/local/kubebuilder && mv /tmp/kubebuilder_$(KUBEBUILDER_VERSION)_$(OS)_amd64/bin /usr/local/kubebuilder; \
 	fi
 
