@@ -25,6 +25,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
+	utilpointer "k8s.io/utils/pointer"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sort"
@@ -69,6 +70,21 @@ func (r *PeanutPipelineExecutionReconciler) Reconcile(req ctrl.Request) (ctrl.Re
 		Name:      pipelineExecution.Spec.PipelineName,
 	}, &pipelineDefinition); err != nil {
 		log.Error(err, "unable to fetch PeanutPipeline", "name", pipelineExecution.Spec.PipelineName)
+	}
+
+	if len(pipelineExecution.OwnerReferences) == 0 {
+		pipelineExecution.OwnerReferences = append(pipelineExecution.OwnerReferences, metav1.OwnerReference{
+			APIVersion:         apiGVStr,
+			Kind:               pipelineDefinition.Kind,
+			Name:               pipelineDefinition.Name,
+			UID:                pipelineDefinition.UID,
+			Controller:         utilpointer.BoolPtr(true),
+			BlockOwnerDeletion: utilpointer.BoolPtr(true),
+		})
+		if err := r.Update(ctx, &pipelineExecution); err != nil {
+			log.Error(err, "unable to update PipelineExecution OwnerReference")
+			return ctrl.Result{}, err
+		}
 	}
 
 	stageGraph, err := pipelineDefinition.BuildStageGraph()
