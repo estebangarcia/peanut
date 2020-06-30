@@ -41,7 +41,6 @@ func init() {
 	_ = clientgoscheme.AddToScheme(scheme)
 
 	_ = peanut.AddToScheme(scheme)
-	_ = pipelinev1alpha1.AddToScheme(scheme)
 	// +kubebuilder:scaffold:scheme
 }
 

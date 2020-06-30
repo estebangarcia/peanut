@@ -89,20 +89,18 @@ func (r *PeanutPipeline) validatePipeline() error {
 	for i, stage := range r.Spec.Stages {
 		path := field.NewPath("spec").Child("stages").Index(i)
 
-		for _, aux := range r.Spec.Stages {
-			if stage.Name == aux.Name {
+		for j, aux := range r.Spec.Stages {
+			if stage.Name == aux.Name && i != j {
 				allErrs = append(allErrs, field.Duplicate(path, stage.Name))
 			}
 		}
-
-		var peanutStage PeanutStage
 
 		namespace := types.NamespacedName{
 			Namespace: r.Namespace,
 			Name:      stage.Type,
 		}
 
-		if err := c.Get(ctx, namespace, &peanutStage); err != nil {
+		if _, err := getStage(namespace); err != nil {
 			allErrs = append(allErrs, field.NotFound(path, err.Error()))
 		}
 	}
@@ -115,4 +113,13 @@ func (r *PeanutPipeline) validatePipeline() error {
 		Group: group,
 		Kind:  kind,
 	}, r.Name, allErrs)
+}
+
+func getStage(key client.ObjectKey) (*PeanutStage, error) {
+	peanutStage := &PeanutStage{}
+	if err := c.Get(ctx, key, peanutStage); err != nil {
+		return nil, err
+	}
+
+	return peanutStage, nil
 }

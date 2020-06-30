@@ -1,4 +1,5 @@
 
+KUBEBUILDER_VERSION ?= 2.3.1
 # Image URL to use all building/pushing image targets
 IMG ?= controller:latest
 # Produce CRDs that work back to Kubernetes 1.11 (no version conversion)
@@ -11,10 +12,19 @@ else
 GOBIN=$(shell go env GOBIN)
 endif
 
+OS=$(shell uname -s | tr '[:upper:]' '[:lower:]')
+
 all: manager
 
+control-plane-install:
+	if [ ! -d "/usr/local/kubebuilder" ]; then \
+		wget -O /tmp/kubebuilder.tar.gz https://github.com/kubernetes-sigs/kubebuilder/releases/download/v$(KUBEBUILDER_VERSION)/kubebuilder_$(KUBEBUILDER_VERSION)_$(OS)_amd64.tar.gz; \
+		tar zxvf /tmp/kubebuilder.tar.gz -C /tmp; \
+		sudo mkdir -p /usr/local/kubebuilder && sudo mv /tmp/kubebuilder_$(KUBEBUILDER_VERSION)_$(OS)_amd64/bin /usr/local/kubebuilder; \
+	fi
+
 # Run tests
-test: generate fmt vet manifests
+test: control-plane-install generate fmt vet manifests
 	go test ./... -coverprofile cover.out
 
 # Build manager binary
