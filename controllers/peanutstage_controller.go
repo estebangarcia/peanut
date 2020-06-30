@@ -39,8 +39,6 @@ func (r *PeanutStageReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error)
 	_ = context.Background()
 	_ = r.Log.WithValues("peanutstage", req.NamespacedName)
 
-	// your logic here
-
 	return ctrl.Result{}, nil
 }
 
